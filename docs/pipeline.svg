@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 310" width="1040" height="310" role="img" aria-labelledby="t d" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title id="t">MRCPsych classifier pipeline</title>
+  <desc id="d">Question bank is split into batches, classified independently by Codex and Claude Code, checked by validate.py, compared by compare.py, and routed to SME review as disagreements and a spot-check sample.</desc>
+  <style>
+    .box { fill: #f6f8fa; stroke: #d0d7de; stroke-width: 1.5; }
+    .agent { fill: #fbefff; stroke: #8250df; }
+    .gate { fill: #ddf4ff; stroke: #0969da; }
+    .bad { fill: #fff8c5; stroke: #bf8700; }
+    .good { fill: #dafbe1; stroke: #1a7f37; }
+    .h { fill: #1f2328; font-size: 15px; font-weight: 600; }
+    .s { fill: #59636e; font-size: 12px; }
+    .m { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .stage { fill: #59636e; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; }
+    .rule { stroke: #d0d7de; stroke-width: 1; }
+    .wire { fill: none; stroke: #0969da; stroke-width: 2; stroke-dasharray: 6 6; animation: flow 0.9s linear infinite; }
+    .loop { fill: none; stroke: #8250df; stroke-width: 1.5; stroke-dasharray: 4 4; animation: flow 1.4s linear infinite reverse; }
+    .head { fill: #0969da; }
+    .lhead { fill: #8250df; }
+    .ok { fill: #1a7f37; font-size: 12px; font-weight: 700; animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes flow { to { stroke-dashoffset: -12; } }
+    @keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .wire, .loop, .ok { animation: none; } }
+    @media (prefers-color-scheme: dark) {
+      .box { fill: #161b22; stroke: #30363d; }
+      .agent { fill: #231b33; stroke: #a371f7; }
+      .gate { fill: #0d2240; stroke: #4493f8; }
+      .bad { fill: #2e2509; stroke: #d29922; }
+      .good { fill: #0f2a18; stroke: #3fb950; }
+      .h { fill: #e6edf3; }
+      .s, .stage { fill: #9198a1; }
+      .rule { stroke: #30363d; }
+      .wire { stroke: #4493f8; }
+      .head { fill: #4493f8; }
+      .loop { stroke: #a371f7; }
+      .lhead { fill: #a371f7; }
+      .ok { fill: #3fb950; }
+    }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="head" d="M0 0 L10 5 L0 10 z"/>
+    </marker>
+    <marker id="la" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="lhead" d="M0 0 L10 5 L0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- connectors -->
+  <path class="wire" d="M160 150 H196" marker-end="url(#a)"/>
+  <path class="wire" d="M320 150 C340 150 336 90 356 90" marker-end="url(#a)"/>
+  <path class="wire" d="M320 150 C340 150 336 210 356 210" marker-end="url(#a)"/>
+  <path class="wire" d="M520 90 C545 90 545 150 566 150" marker-end="url(#a)"/>
+  <path class="wire" d="M520 210 C545 210 545 150 566 150" marker-end="url(#a)"/>
+  <path class="wire" d="M700 150 H736" marker-end="url(#a)"/>
+  <path class="wire" d="M860 150 C880 150 876 90 896 90" marker-end="url(#a)"/>
+  <path class="wire" d="M860 150 C880 150 876 210 896 210" marker-end="url(#a)"/>
+
+  <!-- fix-until-OK loop -->
+  <path class="loop" d="M612 110 C612 72 658 72 658 106" marker-end="url(#la)"/>
+  <text class="s" x="635" y="66" text-anchor="middle">fix until OK</text>
+
+  <!-- 1. question bank -->
+  <rect class="box" x="20" y="110" width="140" height="80" rx="10"/>
+  <text class="h" x="90" y="144" text-anchor="middle">Question bank</text>
+  <text class="s m" x="90" y="164" text-anchor="middle">all_questions.json</text>
+
+  <!-- split -->
+  <rect class="box" x="200" y="110" width="120" height="80" rx="10"/>
+  <text class="h m" x="260" y="144" text-anchor="middle">split.py</text>
+  <text class="s" x="260" y="164" text-anchor="middle">batches of 40</text>
+
+  <!-- agents -->
+  <rect class="box agent" x="360" y="60" width="160" height="60" rx="10"/>
+  <text class="h" x="440" y="86" text-anchor="middle">Codex</text>
+  <text class="s m" x="440" y="104" text-anchor="middle">output/codex/</text>
+  <rect class="box agent" x="360" y="180" width="160" height="60" rx="10"/>
+  <text class="h" x="440" y="206" text-anchor="middle">Claude Code</text>
+  <text class="s m" x="440" y="224" text-anchor="middle">output/claude/</text>
+  <text class="s" x="440" y="150" text-anchor="middle">same rules, run independently</text>
+
+  <!-- validate -->
+  <rect class="box gate" x="570" y="110" width="130" height="80" rx="10"/>
+  <text class="h m" x="635" y="142" text-anchor="middle">validate.py</text>
+  <text class="s" x="635" y="160" text-anchor="middle">ids · topics · paper</text>
+  <text class="ok" x="635" y="179" text-anchor="middle">✓ OK</text>
+
+  <!-- compare -->
+  <rect class="box" x="740" y="110" width="120" height="80" rx="10"/>
+  <text class="h m" x="800" y="144" text-anchor="middle">compare.py</text>
+  <text class="s" x="800" y="164" text-anchor="middle">agreement gate</text>
+
+  <!-- review outputs -->
+  <rect class="box bad" x="900" y="60" width="120" height="60" rx="10"/>
+  <text class="h" x="960" y="86" text-anchor="middle">Disagree</text>
+  <text class="s" x="960" y="104" text-anchor="middle">SME reviews all</text>
+  <rect class="box good" x="900" y="180" width="120" height="60" rx="10"/>
+  <text class="h" x="960" y="206" text-anchor="middle">Agree</text>
+  <text class="s" x="960" y="224" text-anchor="middle">SME spot-checks 10%</text>
+
+  <!-- stages -->
+  <line class="rule" x1="20" y1="266" x2="1020" y2="266"/>
+  <text class="stage" x="170" y="292" text-anchor="middle">1 · PREPARE</text>
+  <text class="stage" x="440" y="292" text-anchor="middle">2 · CLASSIFY</text>
+  <text class="stage" x="635" y="292" text-anchor="middle">3 · VERIFY</text>
+  <text class="stage" x="880" y="292" text-anchor="middle">4 · REVIEW</text>
+</svg>
