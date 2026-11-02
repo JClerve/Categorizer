@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p C:/Users/User/AppData/Local/Temp/claude/D--Root-Personal-Projects-Categorizer/aab53c84-b311-4825-aa7e-2490b816ca5e/scratchpad/dl)",
+      "Bash(curl -sL -A Mozilla/5.0 -o C:/Users/User/AppData/Local/Temp/claude/D--Root-Personal-Projects-Categorizer/aab53c84-b311-4825-aa7e-2490b816ca5e/scratchpad/dl/syllabus.html https://www.rcpsych.ac.uk/training/exams/preparing-for-exams/mrcpsych-examination-syllabus)",
+      "Bash(ls -la C:/Users/User/AppData/Local/Temp/claude/D--Root-Personal-Projects-Categorizer/aab53c84-b311-4825-aa7e-2490b816ca5e/scratchpad/dl)",
+      "Bash(python --version)"
+    ]
+  }
+}
